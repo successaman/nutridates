@@ -211,6 +211,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .card__specs{ display:flex; flex-wrap:wrap; gap:6px; }
 .card__price{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-top:auto; }
+.card__cta{ margin-top:8px; }
 .card__cta{ margin-top:4px; }
 
 .price{ font-family:var(--font-heading-family,"Poppins",sans-serif); font-weight:700; font-size:14px; color:var(--nd-cocoa-deep); }

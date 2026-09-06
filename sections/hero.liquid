@@ -26,10 +26,13 @@
            alt="{{ section.settings.image.alt | escape }}" fetchpriority="high">
     {%- endif -%}
     {%- if section.settings.image == blank -%}
-      <div class="hero__fallback"></div>
+      {%- comment -%}Falls back to the packaged NutriDates artwork{%- endcomment -%}
+      <img class="hero__img" src="{{ section.settings.fallback_asset | asset_url }}"
+           alt="NutriDates Cocoa Dates Milkshake Mix" fetchpriority="high">
     {%- endif -%}
   </div>
 
+  {%- unless section.settings.image_only -%}
   <div class="hero__inner page-width hero__inner--{{ section.settings.text_align }}">
     <div class="hero__content">
       {%- if section.settings.badge != blank -%}
@@ -63,6 +66,11 @@
       </div>
     </div>
   </div>
+  {%- endunless -%}
+
+  {%- if section.settings.image_only and section.settings.cta_url != blank -%}
+    <a class="hero__full-link" href="{{ section.settings.cta_url }}" aria-label="{{ section.settings.heading | escape }}"></a>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -72,6 +80,25 @@
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Desktop image" },
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image" },
+    {
+      "type": "checkbox",
+      "id": "image_only",
+      "label": "Image-only banner",
+      "default": false,
+      "info": "Hides the text overlay so the whole banner is your uploaded artwork, and makes it clickable. Use this when the headline is baked into the image."
+    },
+    {
+      "type": "select",
+      "id": "fallback_asset",
+      "label": "Placeholder artwork",
+      "info": "Shown until you upload your own banner image.",
+      "options": [
+        { "value": "nd-product-hero.png", "label": "Product hero" },
+        { "value": "nd-mockup-kitchen.jpg", "label": "Kitchen mockup" },
+        { "value": "nd-mockup-pedestal.jpg", "label": "Pedestal mockup" }
+      ],
+      "default": "nd-mockup-kitchen.jpg"
+    },
     {
       "type": "select",
       "id": "height",

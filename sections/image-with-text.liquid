@@ -9,6 +9,8 @@
                sizes="(min-width:990px) 46vw, 92vw"
                alt="{{ section.settings.image.alt | escape }}" loading="lazy"
                width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}">
+        {%- elsif section.settings.fallback_asset != 'none' -%}
+          <img src="{{ section.settings.fallback_asset | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
         {%- else -%}
           <div class="iwt__placeholder"></div>
         {%- endif -%}
@@ -97,6 +99,22 @@
   "tag": "section",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "fallback_asset",
+      "label": "Placeholder artwork",
+      "info": "Used until you upload your own image.",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "nd-product-hero.png", "label": "Product hero" },
+        { "value": "nd-mockup-kitchen.jpg", "label": "Kitchen mockup" },
+        { "value": "nd-mockup-pedestal.jpg", "label": "Pedestal mockup" },
+        { "value": "nd-founder.png", "label": "Founder" },
+        { "value": "nd-dates.png", "label": "Dates" },
+        { "value": "nd-cocoa.png", "label": "Cocoa" }
+      ],
+      "default": "none"
+    },
     {
       "type": "select",
       "id": "image_position",

@@ -66,3 +66,7 @@
     background:linear-gradient(180deg, rgba(33,17,12,.25) 0%, rgba(33,17,12,calc(var(--hero-overlay,.3) + .45)) 100%);
   }
 }
+
+/* Image-only banner: whole hero is the artwork and is clickable */
+.hero__full-link{ position:absolute; inset:0; z-index:2; }
+.hero:has(.hero__full-link) .hero__media::after{ display:none; }

@@ -8,12 +8,18 @@
 
 {%- if placeholder -%}
   <div class="card">
-    <div class="card__media">
-      {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-    </div>
+    <a class="card__media" href="{{ routes.all_products_collection_url }}">
+      <img src="{{ 'nd-mockup-pedestal.jpg' | asset_url }}" alt="NutriDates Cocoa Dates Milkshake Mix" loading="lazy">
+    </a>
     <div class="card__body">
       <h3 class="card__title">{{ 'onboarding.product_title' | t }}</h3>
+      {%- if settings.card_badge_1 != blank -%}
+        <div class="card__specs"><span class="chip chip--gold">{{ settings.card_badge_1 }}</span></div>
+      {%- endif -%}
       <div class="card__price"><span class="price">₹399</span></div>
+      <div class="card__cta">
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary btn--sm btn--full">Add to cart</a>
+      </div>
     </div>
   </div>
 

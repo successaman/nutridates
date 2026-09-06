@@ -15,7 +15,12 @@
       {%- for block in section.blocks -%}
         {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="cc__card cc__card--{{ section.settings.style }} reveal" {{ block.shopify_attributes }}>{%- else -%}<div class="cc__card cc__card--{{ section.settings.style }} reveal" {{ block.shopify_attributes }}>{%- endif -%}
 
-          {%- if section.settings.style != 'plain' and block.settings.image != blank -%}
+          {%- if section.settings.style != 'plain' and block.settings.image == blank and block.settings.fallback_asset != 'none' -%}
+            <div class="cc__media">
+              <img src="{{ block.settings.fallback_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+              {%- if block.settings.tag != blank -%}<span class="cc__tag">{{ block.settings.tag }}</span>{%- endif -%}
+            </div>
+          {%- elsif section.settings.style != 'plain' and block.settings.image != blank -%}
             <div class="cc__media">
               <img src="{{ block.settings.image | image_url: width: 800 }}"
                    alt="{{ block.settings.image.alt | escape }}" loading="lazy"
@@ -168,6 +173,23 @@
       "name": "Card",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "select",
+          "id": "fallback_asset",
+          "label": "Placeholder artwork",
+          "info": "Used until you upload your own image.",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "nd-dates.png", "label": "Dates" },
+            { "value": "nd-cocoa.png", "label": "Cocoa" },
+            { "value": "nd-oats.png", "label": "Oats" },
+            { "value": "nd-dryfruits.png", "label": "Dry fruits" },
+            { "value": "nd-product-hero.png", "label": "Product hero" },
+            { "value": "nd-mockup-kitchen.jpg", "label": "Kitchen mockup" },
+            { "value": "nd-mockup-pedestal.jpg", "label": "Pedestal mockup" }
+          ],
+          "default": "none"
+        },
         { "type": "text", "id": "tag", "label": "Tag" },
         { "type": "text", "id": "title", "label": "Title", "default": "Dates" },
         { "type": "textarea", "id": "text", "label": "Text", "default": "Natural sweetness and fibre, straight from the fruit." },

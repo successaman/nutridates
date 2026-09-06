@@ -14,6 +14,8 @@
               <img src="{{ block.settings.image | image_url: width: 700 }}"
                    alt="{{ block.settings.image.alt | escape }}" loading="lazy"
                    width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
+            {%- elsif block.settings.fallback_asset != 'none' -%}
+              <img src="{{ block.settings.fallback_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
             {%- else -%}
               <div class="steps__placeholder">{{ forloop.index }}</div>
             {%- endif -%}
@@ -99,6 +101,20 @@
       "limit": 4,
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "select",
+          "id": "fallback_asset",
+          "label": "Placeholder artwork",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "nd-product-hero.png", "label": "Product hero" },
+            { "value": "nd-mockup-pedestal.jpg", "label": "Pedestal mockup" },
+            { "value": "nd-mockup-kitchen.jpg", "label": "Kitchen mockup" },
+            { "value": "nd-dates.png", "label": "Dates" },
+            { "value": "nd-cocoa.png", "label": "Cocoa" }
+          ],
+          "default": "none"
+        },
         { "type": "text", "id": "title", "label": "Title", "default": "Add the powder" },
         { "type": "text", "id": "text", "label": "Text", "default": "Two heaped scoops (about 32g)." }
       ]
