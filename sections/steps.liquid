@@ -53,7 +53,20 @@
   .steps__title{ font-size:1.15rem; margin-bottom:.35em; }
   .steps__text{ color:var(--text-muted); font-size:.95rem; margin:0; max-width:34ch; margin-inline:auto; }
   .section--cocoa .steps__text{ color:rgba(255,246,233,.7); }
-  @media (max-width:749px){ .steps{ grid-template-columns:1fr; } }
+  /* Mobile: all steps on one line with small square media (GOAT Life pattern) */
+  @media (max-width:749px){
+    .steps{ grid-template-columns:repeat({{ section.blocks.size }},1fr); gap:10px; align-items:start; }
+    .steps__media{ aspect-ratio:1/1; border-radius:var(--r-md); margin-bottom:10px; }
+    .steps__placeholder{ font-size:2rem; }
+    .steps__num{
+      position:static; display:inline-block; margin-bottom:6px;
+      padding:3px 8px; font-size:9px; letter-spacing:.06em;
+    }
+    .steps__item{ display:flex; flex-direction:column; }
+    .steps__item .steps__num{ order:-1; align-self:center; }
+    .steps__title{ font-size:13px; margin-bottom:.25em; }
+    .steps__text{ font-size:11px; line-height:1.35; }
+  }
 </style>
 
 {% schema %}

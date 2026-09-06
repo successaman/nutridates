@@ -44,7 +44,7 @@
 
   /* Layout */
   --page-max: 1320px;
-  --gutter: 20px;
+  --gutter: 15px;
   --header-h: 68px;
 
   /* Type scale (fluid) */
@@ -163,7 +163,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .btn--ghost:hover::after{ transform:translateX(4px); }
 
 .btn--full{ width:100%; }
-.btn--sm{ padding:8px 14px; font-size:11px; }
+.btn--sm{ padding:7px 12px; font-size:11px; }
 .btn--lg{ padding:15px 26px; font-size:16px; }
 
 /* ---------- 5. Chips / badges / pills ---------- */
@@ -422,6 +422,14 @@ ul,ol{margin:0;padding:0;list-style:none}
 @media (min-width:990px){
   .scroller--desktop-grid{ grid-auto-flow:row; grid-template-columns:repeat(var(--cols,4),1fr); overflow:visible; }
 }
+/* Mobile: 2-up grid instead of a horizontal peek (matches GOAT Life) */
+@media (max-width:749px){
+  .scroller{
+    grid-auto-flow:row; grid-template-columns:repeat(2,1fr);
+    grid-auto-columns:auto; overflow-x:visible;
+    gap:14px 10px; scroll-snap-type:none;
+  }
+}
 
 /* ---------- 12. Accordion ---------- */
 .accordion{ border-top:1px solid var(--line); }
@@ -490,3 +498,21 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* Placeholder media */
 .placeholder-svg{ width:100%; height:100%; background:var(--nd-beige); fill:rgba(58,32,23,.28); }
+
+/* ---------- 16. Mobile density (matched to goatlife.co.in) ---------- */
+@media (max-width:749px){
+  .nutri-table{ font-size:12px; }
+  .nutri-table th,.nutri-table td{ padding:9px 10px; }
+  .nutri-table thead th{ font-size:10px; letter-spacing:.06em; }
+  .table-wrap{ border-radius:var(--r-md); }
+
+  .section{ padding-block:36px; }
+  .section--tight{ padding-block:26px; }
+  .section-head{ margin-bottom:22px; }
+  .section-head__eyebrow{ font-size:10px; padding:5px 11px; margin-bottom:10px; }
+  .section-head__sub{ font-size:13px; }
+
+  .card__title{ font-size:13px; }
+  .card__body{ padding-top:10px; gap:6px; }
+  .chip{ padding:5px 10px; font-size:10px; }
+}

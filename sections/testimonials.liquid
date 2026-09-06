@@ -8,7 +8,26 @@
 
     <div class="scroller scroller--desktop-grid" style="--cols:{{ section.settings.columns }};">
       {%- for block in section.blocks -%}
-        <figure class="quote reveal" {{ block.shopify_attributes }}>
+        <figure class="quote reveal{% if block.settings.video != blank or block.settings.video_url != blank %} quote--video{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.video != blank -%}
+            <div class="quote__media">
+              {{ block.settings.video | video_tag: image_size: '600x', controls: true, muted: false, playsinline: true }}
+            </div>
+          {%- elsif block.settings.video_url != blank -%}
+            <div class="quote__media quote__media--embed">
+              {%- if block.settings.video_poster != blank -%}
+                <img src="{{ block.settings.video_poster | image_url: width: 600 }}" alt="" loading="lazy">
+              {%- endif -%}
+              <a class="quote__play" href="{{ block.settings.video_url }}" target="_blank" rel="noopener" aria-label="Play video review">
+                <span></span>
+              </a>
+            </div>
+          {%- elsif block.settings.show_video_placeholder -%}
+            <div class="quote__media quote__media--empty">
+              <span class="quote__play" aria-hidden="true"><span></span></span>
+              <span class="quote__placeholder-label">Video review</span>
+            </div>
+          {%- endif -%}
           {%- if block.settings.rating > 0 -%}
             <div class="quote__stars" aria-label="{{ block.settings.rating }} out of 5">
               {%- for i in (1..block.settings.rating) -%}{% render 'icon', name: 'star' %}{%- endfor -%}
@@ -37,6 +56,27 @@
     background:var(--surface); border:1px solid var(--line);
   }
   .section--cocoa .quote{ background:rgba(255,246,233,.06); border-color:rgba(255,246,233,.14); }
+  .quote__media{
+    position:relative; aspect-ratio:9/16; max-height:340px; overflow:hidden;
+    border-radius:var(--r-md); background:var(--nd-beige); margin-bottom:4px;
+  }
+  .quote__media video,.quote__media img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .quote__media--empty{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    border:1.5px dashed var(--line-strong); background:transparent;
+  }
+  .quote__placeholder-label{ font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); }
+  .quote__play{
+    position:absolute; inset:0; margin:auto; width:52px; height:52px;
+    display:grid; place-items:center; border-radius:var(--r-pill);
+    background:var(--nd-gold); box-shadow:var(--shadow-md);
+  }
+  .quote__media--empty .quote__play{ position:static; width:44px; height:44px; box-shadow:none; }
+  .quote__play span{
+    width:0; height:0; margin-left:3px;
+    border-top:9px solid transparent; border-bottom:9px solid transparent;
+    border-left:14px solid var(--nd-cocoa-deep);
+  }
   .quote__stars{ display:flex; gap:2px; color:var(--nd-gold); }
   .quote__stars svg{ width:16px; height:16px; }
   .quote__text{
@@ -82,7 +122,12 @@
         { "type": "textarea", "id": "text", "label": "Review", "default": "Tastes like a treat but actually keeps me full till lunch." },
         { "type": "text", "id": "name", "label": "Name", "default": "Priya" },
         { "type": "text", "id": "role", "label": "Role / city", "default": "Student, Ranchi" },
-        { "type": "image_picker", "id": "image", "label": "Photo" }
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "header", "content": "Video review" },
+        { "type": "video", "id": "video", "label": "Upload a video" },
+        { "type": "video_url", "id": "video_url", "label": "Or paste a YouTube / Vimeo link", "accept": ["youtube", "vimeo"] },
+        { "type": "image_picker", "id": "video_poster", "label": "Video thumbnail (for the link option)" },
+        { "type": "checkbox", "id": "show_video_placeholder", "label": "Show empty video placeholder", "default": false, "info": "Useful while you are still collecting customer videos." }
       ]
     }
   ],
