@@ -14,22 +14,29 @@
       "blocks": {
         "shop": {
           "type": "menu",
-          "settings": { "heading": "Shop", "menu": "footer" }
+          "settings": { "heading": "SHOP", "menu": "footer" }
         },
-        "learn": {
+        "quick": {
           "type": "menu",
-          "settings": { "heading": "Learn", "menu": "footer" }
+          "settings": { "heading": "QUICK LINKS", "menu": "footer" }
         },
-        "news": {
-          "type": "newsletter",
-          "settings": {
-            "heading": "Get the good stuff",
-            "text": "Recipes, launches and offers. No spam."
-          }
+        "policies": {
+          "type": "menu",
+          "settings": { "heading": "POLICIES", "menu": "footer" }
+        },
+        "follow": {
+          "type": "social",
+          "settings": { "heading": "FOLLOW" }
         }
       },
-      "block_order": ["shop", "learn", "news"],
-      "settings": { "show_policies": true }
+      "block_order": ["shop", "quick", "policies", "follow"],
+      "settings": {
+        "show_policies": true,
+        "show_newsletter": true,
+        "newsletter_heading": "Get the good stuff",
+        "newsletter_text": "Recipes, launches and offers. No spam.",
+        "disclaimer": "NutriDates products are designed to support a balanced everyday diet and are not intended to diagnose, treat, cure or prevent any disease."
+      }
     }
   },
   "order": ["marquee", "footer"]
