@@ -1,0 +1,21 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_announcement": true,
+        "announcement_text": "Free shipping on orders above ₹699  ·  Sip The Strength",
+        "drawer_cta_text": "Shop NutriDates",
+        "drawer_cta_url": "/collections/all"
+      }
+    },
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "settings": {}
+    }
+  },
+  "order": ["header", "cart-drawer"]
+}

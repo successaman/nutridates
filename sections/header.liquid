@@ -1,0 +1,152 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign cart_is_drawer = false
+  if settings.cart_type == 'drawer'
+    assign cart_is_drawer = true
+  endif
+-%}
+
+<div class="header-wrap">
+  {%- if section.settings.show_announcement -%}
+    <div class="announcement">
+      <div class="announcement__track">
+        {%- if section.settings.announcement_link != blank -%}
+          <a href="{{ section.settings.announcement_link }}">{{ section.settings.announcement_text }}</a>
+        {%- else -%}
+          <span>{{ section.settings.announcement_text }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <header class="header">
+    <div class="header__inner">
+
+      <div class="flex items-center">
+        <button class="header__icon header__burger" data-drawer-open="MenuDrawer" aria-label="Open menu">
+          {% render 'icon', name: 'menu' %}
+        </button>
+        <nav class="header__nav" role="navigation" aria-label="Primary">
+          {%- for link in linklists[menu].links limit: 3 -%}
+            <div class="nav-item">
+              <a href="{{ link.url }}"
+                 class="header__link{% if link.title contains 'Shop' or link.title contains 'Buy' %} header__link--highlight{% endif %}"
+                 {% if link.links.size > 0 %}aria-haspopup="true"{% endif %}>
+                {{ link.title }}
+                {%- if link.links.size > 0 %} {% render 'icon', name: 'chevron' %}{% endif -%}
+              </a>
+              {%- if link.links.size > 0 -%}
+                <div class="nav-dropdown">
+                  {%- for child in link.links -%}
+                    <a href="{{ child.url }}">{{ child.title }}</a>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </nav>
+      </div>
+
+      <a class="header__logo" href="{{ routes.root_url }}">
+        {%- if settings.logo -%}
+          <img src="{{ settings.logo | image_url: width: 400 }}"
+               alt="{{ shop.name | escape }}"
+               width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
+               style="width:{{ settings.logo_width }}px;">
+        {%- else -%}
+          {{ shop.name }}
+        {%- endif -%}
+      </a>
+
+      <div class="header__actions">
+        <nav class="header__nav" aria-label="Secondary">
+          {%- for link in linklists[menu].links offset: 3 -%}
+            <div class="nav-item">
+              <a href="{{ link.url }}" class="header__link">
+                {{ link.title }}
+                {%- if link.links.size > 0 %} {% render 'icon', name: 'chevron' %}{% endif -%}
+              </a>
+              {%- if link.links.size > 0 -%}
+                <div class="nav-dropdown" style="left:auto;right:0;">
+                  {%- for child in link.links -%}
+                    <a href="{{ child.url }}">{{ child.title }}</a>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </nav>
+
+        <a class="header__icon" href="{{ routes.search_url }}" aria-label="Search">
+          {% render 'icon', name: 'search' %}
+        </a>
+
+        {%- if shop.customer_accounts_enabled -%}
+          <a class="header__icon hide-mobile" href="{{ routes.account_url }}" aria-label="Account">
+            {% render 'icon', name: 'account' %}
+          </a>
+        {%- endif -%}
+
+        {%- if cart_is_drawer -%}
+          <button class="header__icon" data-drawer-open="CartDrawer" aria-label="Open cart">
+            {% render 'icon', name: 'cart' %}
+            <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+          </button>
+        {%- else -%}
+          <a class="header__icon" href="{{ routes.cart_url }}" aria-label="Cart">
+            {% render 'icon', name: 'cart' %}
+            <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </header>
+</div>
+
+{%- comment -%} ---------- Mobile menu drawer ---------- {%- endcomment -%}
+<nd-drawer class="drawer" id="MenuDrawer">
+  <div class="drawer__overlay"></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer__head">
+      <p class="drawer__title">Menu</p>
+      <button class="header__icon" data-drawer-close aria-label="Close menu">{% render 'icon', name: 'close' %}</button>
+    </div>
+    <div class="drawer__body">
+      {%- for link in linklists[menu].links -%}
+        <a class="drawer__link" href="{{ link.url }}">{{ link.title }}</a>
+        {%- for child in link.links -%}
+          <a class="drawer__sublink" href="{{ child.url }}">{{ child.title }}</a>
+        {%- endfor -%}
+      {%- endfor -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="drawer__link" href="{{ routes.account_url }}">Account</a>
+      {%- endif -%}
+    </div>
+    <div class="drawer__foot">
+      <a href="{{ section.settings.drawer_cta_url }}" class="btn btn--gold btn--full">{{ section.settings.drawer_cta_text }}</a>
+    </div>
+  </div>
+</nd-drawer>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "header", "content": "Announcement bar" },
+    { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Free shipping on orders above ₹699  ·  Sip The Strength"
+    },
+    { "type": "url", "id": "announcement_link", "label": "Announcement link" },
+    { "type": "header", "content": "Mobile drawer CTA" },
+    { "type": "text", "id": "drawer_cta_text", "label": "Button text", "default": "Shop NutriDates" },
+    { "type": "url", "id": "drawer_cta_url", "label": "Button link" }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

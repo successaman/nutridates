@@ -1,0 +1,119 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": { "type": "title", "settings": { "subtitle": "250g pouch · roughly 8 servings · 32g serving size" } },
+        "price": { "type": "price", "settings": {} },
+        "chips": { "type": "chips", "settings": { "chips": "17g protein with milk, Dates + cocoa, 30-second prep" } },
+        "variants": { "type": "variants", "settings": {} },
+        "buy": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
+        "trust": {
+          "type": "trust",
+          "settings": {
+            "items": "Shipped across India from Hazaribagh, Jharkhand\nDispatch within 24-48 hours\nBest before 90 days from packaging"
+          }
+        },
+        "description": { "type": "description", "settings": {} },
+        "ingredients": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Ingredients",
+            "content": "<p>Soya Protein Isolate, Dates Powder, Oats Powder, Skimmed Milk Powder, Cocoa, Dry Fruits Powder, Guar Gum, Soya Lecithin, Salt.</p>"
+          }
+        },
+        "nutrition": {
+          "type": "nutrition",
+          "settings": {
+            "heading": "Nutrition facts",
+            "rows": "Energy | 416 kcal | 133 kcal\nProtein | 34 g | 11 g\nCarbohydrate | 45 g | 14.4 g\nNatural sugar | 25 g | 8 g\nDietary fibre | 6 g | 1.9 g\nTotal fat | 7 g | 2.2 g"
+          }
+        },
+        "prepare": {
+          "type": "accordion",
+          "settings": {
+            "heading": "How to prepare",
+            "content": "<p>Add 2 heaped scoops (about 32g) to roughly 200ml of cold or warm milk. Shake or blend for 10 seconds and drink.</p>"
+          }
+        },
+        "allergens": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Allergens & storage",
+            "content": "<p>Contains oats, nuts and soy. Manufactured in a facility that also processes dairy and whey.</p><p>Store in an airtight container in a cool, dry place away from direct sunlight. Best before 90 days from packaging.</p>"
+          }
+        },
+        "shipping": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Shipping & returns",
+            "content": "<p>Orders are dispatched within 24-48 hours and typically delivered in 3-6 working days across India. Sealed pouches can be returned within 7 days of delivery if unopened.</p>"
+          }
+        },
+        "sku": { "type": "share", "settings": {} }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "chips",
+        "variants",
+        "buy",
+        "trust",
+        "description",
+        "ingredients",
+        "nutrition",
+        "prepare",
+        "allergens",
+        "shipping",
+        "sku"
+      ],
+      "settings": {}
+    },
+
+    "steps": {
+      "type": "steps",
+      "blocks": {
+        "st1": { "type": "step", "settings": { "title": "Scoop", "text": "Add 2 heaped scoops (about 32g)." } },
+        "st2": { "type": "step", "settings": { "title": "Pour", "text": "Add roughly 200ml of cold or warm milk." } },
+        "st3": { "type": "step", "settings": { "title": "Shake & sip", "text": "Shake or blend for 10 seconds." } }
+      },
+      "block_order": ["st1", "st2", "st3"],
+      "settings": { "eyebrow": "30-second ritual", "heading": "How to prepare it.", "background": "cream" }
+    },
+
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": { "type": "quote", "settings": { "rating": 5, "text": "Tastes like a treat but actually keeps me full till lunch.", "name": "Priya", "role": "Student, Ranchi" } },
+        "r2": { "type": "quote", "settings": { "rating": 5, "text": "I've replaced my morning chai-and-biscuit routine with this.", "name": "Aman", "role": "Hazaribagh" } },
+        "r3": { "type": "quote", "settings": { "rating": 5, "text": "My kids drink it without any negotiation.", "name": "Sunita", "role": "Patna" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": { "eyebrow": "Real sips", "heading": "What people say.", "columns": 3, "background": "white" }
+    },
+
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "f1": { "type": "faq", "settings": { "question": "How much protein does it actually have?", "answer": "<p>About 11g per 32g serving of powder, and roughly 17g once prepared with the recommended milk.</p>" } },
+        "f2": { "type": "faq", "settings": { "question": "How many servings are in a pouch?", "answer": "<p>Roughly 8 servings per 250g pouch.</p>" } },
+        "f3": { "type": "faq", "settings": { "question": "Are there allergens?", "answer": "<p>Contains oats, nuts and soy. Made in a facility that also processes dairy and whey.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": { "eyebrow": "Before you buy", "heading": "Common questions.", "background": "cream" }
+    },
+
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "products_to_show": 4,
+        "columns": 4,
+        "show_view_all": true,
+        "eyebrow": "Keep going",
+        "heading": "More from NutriDates.",
+        "background": "white"
+      }
+    }
+  },
+  "order": ["main", "steps", "reviews", "faq", "related"]
+}

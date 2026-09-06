@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_cocoa | default: '#3A2017' }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    {{ content_for_header }}
+
+    {%- liquid
+      assign body_font = settings.type_body_font
+      assign heading_font = settings.type_heading_font
+      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+      assign body_font_italic = body_font | font_modify: 'style', 'italic'
+      assign heading_font_bolder = heading_font | font_modify: 'weight', '+200'
+    -%}
+
+    {% style %}
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_italic | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ heading_font_bolder | font_face: font_display: 'swap' }}
+    {% endstyle %}
+
+    <style>
+      :root{
+        --font-body-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+        --font-body-style: {{ body_font.style }};
+        --font-body-weight: {{ body_font.weight }};
+        --font-heading-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --font-heading-weight: {{ heading_font.weight }};
+
+        --nd-cocoa: {{ settings.color_cocoa }};
+        --nd-cocoa-deep: {{ settings.color_cocoa_deep }};
+        --nd-gold: {{ settings.color_gold }};
+        --nd-cream: {{ settings.color_cream }};
+        --nd-white: {{ settings.color_white }};
+        --nd-date: {{ settings.color_date }};
+        --nd-beige: {{ settings.color_beige }};
+        --nd-ink: {{ settings.color_ink }};
+
+        --page-max: {{ settings.page_width | default: 1320 }}px;
+      }
+    </style>
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+  </head>
+
+  <body class="template-{{ template.name | handle }} {% if template.suffix %}template-suffix-{{ template.suffix | handle }}{% endif %}">
+    <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <ul hidden>
+      <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
+    </ul>
+  </body>
+</html>

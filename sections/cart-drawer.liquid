@@ -1,0 +1,82 @@
+<nd-drawer class="drawer drawer--right" id="CartDrawer">
+  <div class="drawer__overlay"></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Cart">
+    <div class="drawer__head">
+      <p class="drawer__title">Your cart</p>
+      <button class="header__icon" data-drawer-close aria-label="Close cart">{% render 'icon', name: 'close' %}</button>
+    </div>
+
+    <div class="drawer__body" data-cart-drawer-body>
+      {%- if cart.item_count == 0 -%}
+        <div class="text-center" style="padding-block:48px;">
+          <p style="font-size:1.1rem;font-weight:700;">Your cart is empty.</p>
+          <p class="muted">Chocolate that works harder is one click away.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Shop NutriDates</a>
+        </div>
+      {%- else -%}
+
+        {%- assign threshold = settings.free_shipping_threshold | times: 100 -%}
+        {%- if threshold > 0 -%}
+          <div style="background:var(--nd-cream);border-radius:var(--r-md);padding:14px 16px;margin-bottom:18px;font-size:var(--fs-sm);">
+            {%- if cart.total_price >= threshold -%}
+              <strong>Free shipping unlocked.</strong>
+            {%- else -%}
+              {%- assign remaining = threshold | minus: cart.total_price -%}
+              Add <strong>{{ remaining | money }}</strong> more for free shipping.
+            {%- endif -%}
+            <div style="height:6px;background:var(--nd-beige);border-radius:999px;margin-top:10px;overflow:hidden;">
+              {%- assign pct = cart.total_price | times: 100 | divided_by: threshold -%}
+              <div style="height:100%;width:{% if pct > 100 %}100{% else %}{{ pct }}{% endif %}%;background:var(--nd-gold);"></div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <ul>
+          {%- for line in cart.items -%}
+            <li style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);">
+              <a href="{{ line.url }}" style="flex:none;width:76px;">
+                {%- if line.image -%}
+                  <img src="{{ line.image | image_url: width: 200 }}" alt="{{ line.title | escape }}"
+                       width="76" height="76" style="border-radius:var(--r-md);object-fit:cover;aspect-ratio:1;">
+                {%- endif -%}
+              </a>
+              <div style="flex:1;min-width:0;">
+                <a href="{{ line.url }}" style="font-weight:700;font-size:.95rem;">{{ line.product.title }}</a>
+                {%- unless line.variant.title contains 'Default' -%}
+                  <p class="muted" style="font-size:var(--fs-xs);margin:2px 0 0;">{{ line.variant.title }}</p>
+                {%- endunless -%}
+                <p style="margin:6px 0 0;font-weight:700;">{{ line.final_line_price | money }}</p>
+                <div class="flex items-center gap-md" style="margin-top:6px;">
+                  <span class="muted" style="font-size:var(--fs-xs);">Qty {{ line.quantity }}</span>
+                  <button type="button" data-cart-remove="{{ forloop.index }}"
+                          class="muted" style="font-size:var(--fs-xs);text-decoration:underline;">Remove</button>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="drawer__foot">
+        <div class="flex items-center" style="justify-content:space-between;margin-bottom:6px;">
+          <span style="font-weight:700;">Subtotal</span>
+          <span class="price">{{ cart.total_price | money }}</span>
+        </div>
+        <p class="muted" style="font-size:var(--fs-xs);margin-bottom:14px;">Taxes and shipping calculated at checkout.</p>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="btn btn--primary btn--full">Checkout</button>
+        </form>
+      </div>
+    {%- endif -%}
+  </div>
+</nd-drawer>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

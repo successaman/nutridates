@@ -1,0 +1,44 @@
+<article class="section">
+  <div class="page-width page-width--narrow">
+    <div class="section-head reveal">
+      <span class="section-head__eyebrow">{{ article.published_at | date: '%B %d, %Y' }}</span>
+      <h1 class="section-head__title">{{ article.title }}</h1>
+      {%- if article.author != blank -%}<p class="section-head__sub">By {{ article.author }}</p>{%- endif -%}
+    </div>
+
+    {%- if article.image -%}
+      <img class="rounded reveal" src="{{ article.image | image_url: width: 1400 }}"
+           alt="{{ article.image.alt | escape }}" style="margin-bottom:36px;width:100%;"
+           width="{{ article.image.width }}" height="{{ article.image.height }}">
+    {%- endif -%}
+
+    <div class="rte reveal">{{ article.content }}</div>
+
+    {%- if blog.comments_enabled? -%}
+      <div style="margin-top:48px;">
+        <h2 style="font-size:var(--fs-h3);">Comments</h2>
+        {%- for comment in article.comments -%}
+          <div style="padding:18px 0;border-bottom:1px solid var(--line);">
+            <strong>{{ comment.author }}</strong>
+            <span class="muted" style="font-size:var(--fs-xs);"> · {{ comment.created_at | date: '%b %d, %Y' }}</span>
+            <div class="muted" style="margin-top:6px;">{{ comment.content }}</div>
+          </div>
+        {%- endfor -%}
+
+        {%- form 'new_comment', article -%}
+          {%- if form.errors -%}
+            <p style="color:#B3261E;">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+          <div class="field"><label class="field__label" for="CName">Name</label><input class="input" id="CName" name="comment[author]" required></div>
+          <div class="field"><label class="field__label" for="CEmail">Email</label><input class="input" type="email" id="CEmail" name="comment[email]" required></div>
+          <div class="field"><label class="field__label" for="CBody">Comment</label><textarea class="input" id="CBody" name="comment[body]" rows="4" required></textarea></div>
+          <button type="submit" class="btn btn--primary">Post comment</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

@@ -1,0 +1,68 @@
+/* NutriDates — Hero */
+.hero{ position:relative; display:flex; align-items:center; overflow:hidden; background:var(--nd-cocoa); }
+.hero--sm{ min-height:360px; }
+.hero--md{ min-height:clamp(420px,52vh,560px); }
+.hero--lg{ min-height:clamp(500px,72vh,720px); }
+.hero--full{ min-height:calc(100svh - var(--header-h)); }
+
+.hero__media{ position:absolute; inset:0; }
+.hero__img{ width:100%; height:100%; object-fit:cover; }
+.hero__fallback{
+  width:100%; height:100%;
+  background:
+    radial-gradient(120% 90% at 78% 20%, rgba(245,166,35,.30), transparent 60%),
+    linear-gradient(135deg, var(--nd-cocoa-deep), var(--nd-date));
+}
+.hero__media::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, rgba(33,17,12,calc(var(--hero-overlay,.3) + .35)) 0%,
+                                    rgba(33,17,12,var(--hero-overlay,.3)) 55%,
+                                    rgba(33,17,12,calc(var(--hero-overlay,.3) * .4)) 100%);
+}
+
+.hero__inner{ position:relative; z-index:1; width:100%; padding-block:clamp(52px,7vw,96px); }
+.hero__inner--center{ text-align:center; }
+.hero__inner--center .hero__content{ margin-inline:auto; }
+.hero__inner--center .hero__stats,
+.hero__inner--center .hero__actions{ justify-content:center; }
+
+.hero__content{ max-width:660px; color:var(--nd-cream); }
+.hero__badge{
+  display:inline-block; padding:8px 16px; border-radius:var(--r-pill);
+  background:rgba(255,246,233,.16); backdrop-filter:blur(6px);
+  border:1px solid rgba(255,246,233,.22);
+  font-size:var(--fs-xs); font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero__title{
+  font-size:var(--fs-display); color:var(--nd-white);
+  margin:0 0 .35em; text-wrap:balance;
+  text-shadow:0 2px 24px rgba(33,17,12,.35);
+}
+.hero__sub{
+  font-size:clamp(1rem,.95rem+.5vw,1.25rem);
+  color:rgba(255,246,233,.9); max-width:52ch; margin:0 0 28px;
+}
+
+.hero__stats{ display:flex; flex-wrap:wrap; gap:12px; margin:0 0 30px; }
+.hero__stat{
+  display:flex; flex-direction:column; gap:2px;
+  padding:12px 20px; border-radius:var(--r-md);
+  background:rgba(255,246,233,.12); border:1px solid rgba(255,246,233,.18);
+  backdrop-filter:blur(6px);
+}
+.hero__stat-value{
+  font-family:var(--font-heading-family,"Poppins",sans-serif);
+  font-weight:800; font-size:1.4rem; line-height:1; color:var(--nd-gold);
+}
+.hero__stat-label{ font-size:var(--fs-xs); letter-spacing:.06em; text-transform:uppercase; color:rgba(255,246,233,.78); }
+
+.hero__actions{ display:flex; flex-wrap:wrap; gap:12px; }
+
+@media (max-width:749px){
+  .hero__stat{ padding:10px 14px; }
+  .hero__stat-value{ font-size:1.15rem; }
+  .hero__media::after{
+    background:linear-gradient(180deg, rgba(33,17,12,.25) 0%, rgba(33,17,12,calc(var(--hero-overlay,.3) + .45)) 100%);
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "Dates · Cocoa · Protein · Everyday nutrition",
+        "speed": 34
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": {
+          "type": "menu",
+          "settings": { "heading": "Shop", "menu": "footer" }
+        },
+        "learn": {
+          "type": "menu",
+          "settings": { "heading": "Learn", "menu": "footer" }
+        },
+        "news": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Get the good stuff",
+            "text": "Recipes, launches and offers. No spam."
+          }
+        }
+      },
+      "block_order": ["shop", "learn", "news"],
+      "settings": { "show_policies": true }
+    }
+  },
+  "order": ["marquee", "footer"]
+}

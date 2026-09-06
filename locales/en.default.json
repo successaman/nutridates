@@ -1,0 +1,58 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "search": "Search",
+      "placeholder": "Search for cocoa, dates, protein…"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "close": "Close",
+    "link_messages": {
+      "new_window": "Opens in a new window."
+    }
+  },
+  "onboarding": {
+    "product_title": "NutriDates Cocoa Dates Milkshake Mix"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "choose_options": "Choose options"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty.",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "note": "Order note",
+      "taxes_note": "Taxes and shipping calculated at checkout."
+    }
+  },
+  "newsletter": {
+    "label": "Email",
+    "button_label": "Join",
+    "success": "Thanks for subscribing."
+  },
+  "shopify": {
+    "checkout": {
+      "general": {
+        "continue_to_shipping_method": "Continue to shipping"
+      }
+    }
+  }
+}

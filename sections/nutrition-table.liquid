@@ -1,0 +1,137 @@
+<section class="section{% if section.settings.background == 'cream' %} section--cream{% elsif section.settings.background == 'beige' %} section--beige{% elsif section.settings.background == 'cocoa' %} section--cocoa{% endif %}">
+  <div class="page-width page-width--narrow">
+    <div class="section-head reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="section-head__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-head__title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}<p class="section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+
+    <div class="table-wrap reveal">
+      <table class="nutri-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ section.settings.col_0 }}</th>
+            <th scope="col">{{ section.settings.col_1 }}</th>
+            {%- if section.settings.col_2 != blank -%}<th scope="col">{{ section.settings.col_2 }}</th>{%- endif -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row" style="font-weight:600;">{{ block.settings.label }}</th>
+              <td>{{ block.settings.value_1 }}</td>
+              {%- if section.settings.col_2 != blank -%}<td>{{ block.settings.value_2 }}</td>{%- endif -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="muted" style="font-size:var(--fs-xs);margin-top:16px;">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.ingredients != blank -%}
+      <div class="nutri-extra reveal">
+        <h3>Ingredients</h3>
+        <p>{{ section.settings.ingredients }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.allergens != blank -%}
+      <div class="nutri-extra nutri-extra--warn reveal">
+        <h3>Allergen information</h3>
+        <p>{{ section.settings.allergens }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.storage != blank -%}
+      <div class="nutri-extra reveal">
+        <h3>Storage &amp; shelf life</h3>
+        <p>{{ section.settings.storage }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .nutri-extra{ margin-top:24px; padding:20px 22px; border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--line); }
+  .section--cocoa .nutri-extra{ background:rgba(255,246,233,.06); border-color:rgba(255,246,233,.14); }
+  .nutri-extra--warn{ border-left:4px solid var(--nd-gold); }
+  .nutri-extra h3{ font-size:.82rem; text-transform:uppercase; letter-spacing:.12em; color:var(--nd-date); margin-bottom:.7em; }
+  .section--cocoa .nutri-extra h3{ color:var(--nd-gold); }
+  .nutri-extra p{ margin:0; font-size:.93rem; color:var(--text-muted); }
+  .section--cocoa .nutri-extra p{ color:rgba(255,246,233,.72); }
+</style>
+
+{% schema %}
+{
+  "name": "Nutrition table",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Nothing hidden" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The full nutrition panel." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Straight off the pouch." },
+    { "type": "header", "content": "Columns" },
+    { "type": "text", "id": "col_0", "label": "Column 1 heading", "default": "Nutrient" },
+    { "type": "text", "id": "col_1", "label": "Column 2 heading", "default": "Per 100g" },
+    { "type": "text", "id": "col_2", "label": "Column 3 heading", "default": "Per 32g serving" },
+    { "type": "header", "content": "Extra panels" },
+    {
+      "type": "textarea",
+      "id": "ingredients",
+      "label": "Ingredients",
+      "default": "Soya Protein Isolate, Dates Powder, Oats Powder, Skimmed Milk Powder, Cocoa, Dry Fruits Powder, Guar Gum, Soya Lecithin, Salt."
+    },
+    {
+      "type": "textarea",
+      "id": "allergens",
+      "label": "Allergens",
+      "default": "Contains oats, nuts and soy. Manufactured in a facility that also processes dairy and whey."
+    },
+    {
+      "type": "textarea",
+      "id": "storage",
+      "label": "Storage",
+      "default": "Store in an airtight container in a cool, dry place away from direct sunlight. Best before 90 days from packaging."
+    },
+    { "type": "text", "id": "footnote", "label": "Footnote", "default": "Approximate values. Refer to the pack for the definitive panel." },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "white", "label": "Warm white" },
+        { "value": "cream", "label": "Warm cream" },
+        { "value": "beige", "label": "Soft beige" },
+        { "value": "cocoa", "label": "Cocoa" }
+      ],
+      "default": "white"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Nutrient", "default": "Protein" },
+        { "type": "text", "id": "value_1", "label": "Per 100g", "default": "34 g" },
+        { "type": "text", "id": "value_2", "label": "Per serving", "default": "11 g" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nutrition table",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Energy", "value_1": "416 kcal", "value_2": "133 kcal" } },
+        { "type": "row", "settings": { "label": "Protein", "value_1": "34 g", "value_2": "11 g" } },
+        { "type": "row", "settings": { "label": "Carbohydrate", "value_1": "45 g", "value_2": "14.4 g" } },
+        { "type": "row", "settings": { "label": "Natural sugar", "value_1": "25 g", "value_2": "8 g" } },
+        { "type": "row", "settings": { "label": "Dietary fibre", "value_1": "6 g", "value_2": "1.9 g" } },
+        { "type": "row", "settings": { "label": "Total fat", "value_1": "7 g", "value_2": "2.2 g" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

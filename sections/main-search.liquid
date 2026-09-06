@@ -1,0 +1,51 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-head reveal">
+      <h1 class="section-head__title">Search</h1>
+    </div>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+      <input class="input" type="search" name="q" value="{{ search.terms | escape }}"
+             placeholder="Search for cocoa, dates, protein…" aria-label="Search">
+      <button type="submit" class="btn btn--primary">Search</button>
+    </form>
+
+    {%- if search.performed -%}
+      <p class="muted" style="margin:24px 0;">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for &ldquo;{{ search.terms }}&rdquo;</p>
+
+      {%- paginate search.results by 24 -%}
+        <div class="grid grid--4">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              <div class="reveal">{% render 'product-card', product: item %}</div>
+            {%- else -%}
+              <a href="{{ item.url }}" class="reveal" style="display:block;padding:22px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);">
+                <h2 style="font-size:1.05rem;margin-bottom:.4em;">{{ item.title }}</h2>
+                <p class="muted" style="font-size:.92rem;margin:0;">{{ item.content | strip_html | truncate: 110 }}</p>
+              </a>
+            {%- endif -%}
+          {%- else -%}
+            <p class="muted">Nothing matched. Try a different word.</p>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav style="display:flex;justify-content:center;gap:16px;align-items:center;margin-top:40px;">
+            {%- if paginate.previous %}<a class="btn btn--outline btn--sm" href="{{ paginate.previous.url }}">Previous</a>{% endif -%}
+            <span class="muted">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+            {%- if paginate.next %}<a class="btn btn--outline btn--sm" href="{{ paginate.next.url }}">Next</a>{% endif -%}
+          </nav>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .search-form{ display:flex; gap:10px; max-width:620px; margin-inline:auto; }
+  .search-form .input{ border-radius:var(--r-pill); }
+</style>
+
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

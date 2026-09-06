@@ -1,0 +1,108 @@
+{%- comment -%}
+  NutriDates product card.
+  Params:
+    product         — product object (required unless placeholder)
+    placeholder     — true to render an empty state card
+    show_quick_add  — override theme setting
+{%- endcomment -%}
+
+{%- if placeholder -%}
+  <div class="card">
+    <div class="card__media">
+      {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+    <div class="card__body">
+      <h3 class="card__title">{{ 'onboarding.product_title' | t }}</h3>
+      <div class="card__price"><span class="price">₹399</span></div>
+    </div>
+  </div>
+
+{%- else -%}
+  {%- liquid
+    assign badge_1 = product.metafields.custom.badge_1 | default: settings.card_badge_1
+    assign badge_2 = product.metafields.custom.badge_2
+    assign quick_add = show_quick_add | default: settings.card_show_quick_add, allow_false: true
+    assign on_sale = false
+    if product.compare_at_price > product.price
+      assign on_sale = true
+      assign off = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+    endif
+  -%}
+
+  <div class="card">
+    {%- if product.available == false -%}
+      <span class="badge-sale badge-sold-out">Sold out</span>
+    {%- elsif on_sale -%}
+      <span class="badge-sale">{{ off }}% OFF</span>
+    {%- endif -%}
+
+    <a class="card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        <img
+          src="{{ product.featured_media | image_url: width: 800 }}"
+          srcset="{{ product.featured_media | image_url: width: 400 }} 400w,
+                  {{ product.featured_media | image_url: width: 800 }} 800w"
+          sizes="(min-width: 990px) 320px, 45vw"
+          alt="{{ product.featured_media.alt | default: product.title | escape }}"
+          width="{{ product.featured_media.width }}"
+          height="{{ product.featured_media.height }}"
+          loading="lazy">
+      {%- else -%}
+        {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+
+      {%- if settings.card_show_second_image and product.media[1] -%}
+        <img class="card__media-secondary"
+          src="{{ product.media[1] | image_url: width: 800 }}"
+          alt=""
+          loading="lazy"
+          aria-hidden="true">
+      {%- endif -%}
+    </a>
+
+    <div class="card__body">
+      {%- if settings.card_show_rating and product.metafields.reviews.rating.value != blank -%}
+        {%- assign rating = product.metafields.reviews.rating.value.rating | round: 1 -%}
+        <span class="rating">
+          <span class="rating__stars" aria-hidden="true">★★★★★</span>
+          <span>{{ rating }} · {{ product.metafields.reviews.rating_count.value }} reviews</span>
+        </span>
+      {%- endif -%}
+
+      {%- if settings.card_show_vendor and product.vendor != blank -%}
+        <span class="muted" style="font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;font-weight:700;">{{ product.vendor }}</span>
+      {%- endif -%}
+
+      <h3 class="card__title">
+        <a href="{{ product.url }}">{{ product.title }}</a>
+      </h3>
+
+      {%- if badge_1 != blank or badge_2 != blank -%}
+        <div class="card__specs">
+          {%- if badge_1 != blank %}<span class="chip chip--gold">{{ badge_1 }}</span>{% endif -%}
+          {%- if badge_2 != blank %}<span class="chip">{{ badge_2 }}</span>{% endif -%}
+        </div>
+      {%- endif -%}
+
+      {% render 'price', product: product %}
+
+      {%- if quick_add -%}
+        <div class="card__cta">
+          {%- if product.available -%}
+            {%- if product.variants.size > 1 -%}
+              <a href="{{ product.url }}" class="btn btn--primary btn--sm btn--full">Choose options</a>
+            {%- else -%}
+              {%- form 'product', product, data-cart-form: true -%}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn btn--primary btn--sm btn--full"><span>Add to cart</span></button>
+              {%- endform -%}
+            {%- endif -%}
+          {%- else -%}
+            <button class="btn btn--outline btn--sm btn--full" disabled><span>Sold out</span></button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

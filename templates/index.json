@@ -1,0 +1,242 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "17g", "label": "Protein with milk" } },
+        "s2": { "type": "stat", "settings": { "value": "133", "label": "kcal per serving" } },
+        "s3": { "type": "stat", "settings": { "value": "30s", "label": "Prep time" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "height": "lg",
+        "overlay_opacity": 30,
+        "text_align": "left",
+        "badge": "New · Cocoa Dates Milkshake Mix",
+        "heading": "Chocolate that works harder.",
+        "subheading": "Dates, cocoa and protein in one 30-second shake. Sip The Strength.",
+        "cta_text": "Shop now — ₹399",
+        "cta_url": "/collections/all",
+        "cta2_text": "See what's inside",
+        "cta2_url": "#ingredients"
+      }
+    },
+
+    "benefits": {
+      "type": "icon-strip",
+      "blocks": {
+        "b1": { "type": "item", "settings": { "icon": "bolt", "title": "17g protein with milk", "text": "Prepared as directed" } },
+        "b2": { "type": "item", "settings": { "icon": "leaf", "title": "Dates, oats & cocoa", "text": "Real ingredients" } },
+        "b3": { "type": "item", "settings": { "icon": "star", "title": "Ready in 30 seconds", "text": "Shake and go" } },
+        "b4": { "type": "item", "settings": { "icon": "truck", "title": "Shipped across India", "text": "From Hazaribagh" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": { "background": "cream" }
+    },
+
+    "products": {
+      "type": "featured-collection",
+      "settings": {
+        "products_to_show": 4,
+        "columns": 4,
+        "show_view_all": true,
+        "eyebrow": "The range",
+        "heading": "Pick your NutriDates.",
+        "subheading": "Date-powered nutrition that actually tastes like a treat.",
+        "background": "white"
+      }
+    },
+
+    "steps": {
+      "type": "steps",
+      "blocks": {
+        "st1": { "type": "step", "settings": { "title": "Scoop", "text": "Add 2 heaped scoops (about 32g) of NutriDates." } },
+        "st2": { "type": "step", "settings": { "title": "Pour", "text": "Add roughly 200ml of cold or warm milk." } },
+        "st3": { "type": "step", "settings": { "title": "Shake & sip", "text": "Shake or blend for 10 seconds. Done." } }
+      },
+      "block_order": ["st1", "st2", "st3"],
+      "settings": {
+        "eyebrow": "30-second ritual",
+        "heading": "A milkshake in three steps.",
+        "subheading": "One 32g serving is roughly 2 heaped scoops.",
+        "background": "cream"
+      }
+    },
+
+    "ingredients": {
+      "type": "content-cards",
+      "blocks": {
+        "i1": { "type": "card", "settings": { "title": "Dates", "text": "Natural sweetness, fibre and warmth — the heart of the brand." } },
+        "i2": { "type": "card", "settings": { "title": "Cocoa", "text": "The chocolate taste that turns nutrition into a habit." } },
+        "i3": { "type": "card", "settings": { "title": "Oats", "text": "Slow, steady carbohydrates for a longer-lasting breakfast." } },
+        "i4": { "type": "card", "settings": { "title": "Soya protein isolate", "text": "The protein backbone behind every 11g serving." } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "eyebrow": "Inside the pouch",
+        "heading": "Ingredients you can pronounce.",
+        "subheading": "Nine ingredients. Nothing you need a chemistry degree to read.",
+        "style": "boxed",
+        "columns": 4,
+        "image_ratio": "4/3",
+        "background": "white"
+      }
+    },
+
+    "protein": {
+      "type": "image-with-text",
+      "blocks": {
+        "p1": { "type": "point", "settings": { "title": "11g protein from the powder", "text": "Per 32g serving." } },
+        "p2": { "type": "point", "settings": { "title": "About 17g once mixed with milk", "text": "Using the recommended 200ml." } },
+        "p3": { "type": "point", "settings": { "title": "Carbohydrates and fibre too", "text": "14.4g carbs and 1.9g fibre per serving." } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "image_position": "left",
+        "image_ratio": "4/5",
+        "float_stat": "17g",
+        "float_label": "Protein with milk",
+        "eyebrow": "The protein bit",
+        "heading": "17g protein when made with milk.",
+        "text": "<p>A 32g serving of NutriDates gives you about 11g of protein on its own. Prepared with roughly 200ml of milk as directed, the finished drink lands around 17g.</p>",
+        "cta_text": "Read the full label",
+        "cta_url": "#nutrition",
+        "disclaimer": "Protein value of the prepared drink depends on the milk used.",
+        "background": "cocoa"
+      }
+    },
+
+    "occasions": {
+      "type": "content-cards",
+      "blocks": {
+        "o1": { "type": "card", "settings": { "tag": "07:30", "title": "Morning strength", "text": "Breakfast that takes less time than making tea." } },
+        "o2": { "type": "card", "settings": { "tag": "16:00", "title": "Study break", "text": "Something better than another packet of biscuits." } },
+        "o3": { "type": "card", "settings": { "tag": "19:00", "title": "Post-workout shake", "text": "Carbs and protein without the chalky aftertaste." } },
+        "o4": { "type": "card", "settings": { "tag": "21:00", "title": "Evening chocolate craving", "text": "Give in. It's mostly dates and cocoa." } }
+      },
+      "block_order": ["o1", "o2", "o3", "o4"],
+      "settings": {
+        "eyebrow": "When to sip",
+        "heading": "It fits wherever your day has a gap.",
+        "style": "boxed",
+        "columns": 4,
+        "image_ratio": "4/5",
+        "background": "cream"
+      }
+    },
+
+    "nutrition": {
+      "type": "nutrition-table",
+      "blocks": {
+        "n1": { "type": "row", "settings": { "label": "Energy", "value_1": "416 kcal", "value_2": "133 kcal" } },
+        "n2": { "type": "row", "settings": { "label": "Protein", "value_1": "34 g", "value_2": "11 g" } },
+        "n3": { "type": "row", "settings": { "label": "Carbohydrate", "value_1": "45 g", "value_2": "14.4 g" } },
+        "n4": { "type": "row", "settings": { "label": "Natural sugar", "value_1": "25 g", "value_2": "8 g" } },
+        "n5": { "type": "row", "settings": { "label": "Dietary fibre", "value_1": "6 g", "value_2": "1.9 g" } },
+        "n6": { "type": "row", "settings": { "label": "Total fat", "value_1": "7 g", "value_2": "2.2 g" } }
+      },
+      "block_order": ["n1", "n2", "n3", "n4", "n5", "n6"],
+      "settings": {
+        "eyebrow": "Nothing hidden",
+        "heading": "The full nutrition panel.",
+        "subheading": "Straight off the pouch.",
+        "col_0": "Nutrient",
+        "col_1": "Per 100g",
+        "col_2": "Per 32g serving",
+        "background": "white"
+      }
+    },
+
+    "comparison": {
+      "type": "comparison",
+      "blocks": {
+        "c1": { "type": "row", "settings": { "label": "Protein per serving", "us_text": "11g (about 17g with milk)", "them_text": "Typically 1-3g" } },
+        "c2": { "type": "row", "settings": { "label": "Sweetness", "us_text": "Largely from dates", "them_text": "Usually added sugar" } },
+        "c3": { "type": "row", "settings": { "label": "Oats and dry fruits", "us_text": "Included", "them_text": "Rarely" } },
+        "c4": { "type": "row", "settings": { "label": "Dietary fibre", "us_text": "1.9g per serving", "them_text": "Often negligible" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {
+        "eyebrow": "Honest comparison",
+        "heading": "How NutriDates stacks up.",
+        "col_us": "NutriDates",
+        "col_them": "Typical drink mix",
+        "background": "beige"
+      }
+    },
+
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": { "type": "quote", "settings": { "rating": 5, "text": "Tastes like a treat but actually keeps me full till lunch.", "name": "Priya", "role": "Student, Ranchi" } },
+        "r2": { "type": "quote", "settings": { "rating": 5, "text": "I've replaced my morning chai-and-biscuit routine with this.", "name": "Aman", "role": "Hazaribagh" } },
+        "r3": { "type": "quote", "settings": { "rating": 5, "text": "My kids drink it without any negotiation. That's the whole review.", "name": "Sunita", "role": "Patna" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {
+        "eyebrow": "Real sips",
+        "heading": "Loved by people who skip breakfast.",
+        "columns": 3,
+        "background": "white"
+      }
+    },
+
+    "story": {
+      "type": "image-with-text",
+      "settings": {
+        "image_position": "right",
+        "image_ratio": "4/5",
+        "eyebrow": "Born in Jharkhand",
+        "heading": "Started in Hazaribagh. Built for everyday India.",
+        "text": "<p>NutriDates began with a simple frustration: healthy drinks rarely taste good, and the ones that taste good are mostly sugar. Founder Priyam Gupta set out to build the version that sits in between — a date-powered chocolate shake you'd actually look forward to.</p>",
+        "cta_text": "Read our story",
+        "cta_url": "/pages/about",
+        "background": "cream"
+      }
+    },
+
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "f1": { "type": "faq", "settings": { "question": "How much protein does it actually have?", "answer": "<p>A 32g serving of the powder gives about 11g of protein. Prepared with roughly 200ml of milk as directed, the finished drink comes to about 17g.</p>" } },
+        "f2": { "type": "faq", "settings": { "question": "How many servings are in a pouch?", "answer": "<p>Each 250g pouch delivers roughly 8 servings at the suggested 32g serving size.</p>" } },
+        "f3": { "type": "faq", "settings": { "question": "What is the shelf life?", "answer": "<p>90 days from the packaging date. Store in an airtight container in a cool, dry place away from direct sunlight.</p>" } },
+        "f4": { "type": "faq", "settings": { "question": "Are there allergens?", "answer": "<p>Yes. NutriDates contains oats, nuts and soy, and is manufactured in a facility that also processes dairy and whey.</p>" } },
+        "f5": { "type": "faq", "settings": { "question": "Can I make it with water?", "answer": "<p>You can, but the drink is designed for milk. The 17g protein figure applies to the version prepared with milk as directed.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5"],
+      "settings": {
+        "eyebrow": "Good questions",
+        "heading": "Everything you might ask.",
+        "open_first": true,
+        "background": "white"
+      }
+    },
+
+    "final_cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Sip The Strength",
+        "heading": "Make it your morning habit.",
+        "text": "250g pouch. Roughly 8 servings. Cocoa, dates and protein in every scoop.",
+        "cta_text": "Order now — ₹399",
+        "cta_url": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "benefits",
+    "products",
+    "steps",
+    "ingredients",
+    "protein",
+    "occasions",
+    "nutrition",
+    "comparison",
+    "reviews",
+    "story",
+    "faq",
+    "final_cta"
+  ]
+}

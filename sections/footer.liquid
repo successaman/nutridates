@@ -1,0 +1,127 @@
+<footer class="footer">
+  <div class="page-width">
+    <div class="footer__grid">
+
+      <div>
+        {%- if settings.logo -%}
+          <img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}"
+               style="width:{{ settings.logo_width }}px;filter:brightness(0) invert(1);margin-bottom:12px;">
+        {%- else -%}
+          <p class="footer__brand-name">{{ shop.name }}</p>
+        {%- endif -%}
+        <p class="footer__tagline">{{ settings.brand_tagline }}</p>
+        <p class="footer__blurb">{{ settings.brand_blurb }}</p>
+
+        <div class="footer__socials">
+          {%- if settings.social_instagram != blank -%}
+            <a class="footer__social" href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">{% render 'icon', name: 'instagram' %}</a>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <a class="footer__social" href="{{ settings.social_facebook }}" aria-label="Facebook" target="_blank" rel="noopener">{% render 'icon', name: 'facebook' %}</a>
+          {%- endif -%}
+          {%- if settings.social_youtube != blank -%}
+            <a class="footer__social" href="{{ settings.social_youtube }}" aria-label="YouTube" target="_blank" rel="noopener">{% render 'icon', name: 'youtube' %}</a>
+          {%- endif -%}
+          {%- if settings.social_whatsapp != blank -%}
+            <a class="footer__social" href="{{ settings.social_whatsapp }}" aria-label="WhatsApp" target="_blank" rel="noopener">{% render 'icon', name: 'whatsapp' %}</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'menu' -%}
+            <div {{ block.shopify_attributes }}>
+              <p class="footer__heading">{{ block.settings.heading }}</p>
+              <ul class="footer__list">
+                {%- for link in linklists[block.settings.menu].links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+
+          {%- when 'text' -%}
+            <div {{ block.shopify_attributes }}>
+              <p class="footer__heading">{{ block.settings.heading }}</p>
+              <div class="footer__blurb">{{ block.settings.text }}</div>
+            </div>
+
+          {%- when 'newsletter' -%}
+            <div {{ block.shopify_attributes }} style="grid-column:span 1;">
+              <p class="footer__heading">{{ block.settings.heading }}</p>
+              <p class="footer__blurb">{{ block.settings.text }}</p>
+              {%- form 'customer', class: 'newsletter' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="newsletter__form">
+                  <input class="newsletter__input" type="email" name="contact[email]"
+                         placeholder="Your email" required aria-label="Email">
+                  <button type="submit" class="btn btn--gold btn--sm">Join</button>
+                </div>
+                {%- if form.posted_successfully? -%}
+                  <p style="color:var(--nd-gold);font-size:var(--fs-sm);margin-top:10px;">Thanks for subscribing.</p>
+                {%- endif -%}
+              {%- endform -%}
+            </div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+      <span>
+        {%- if section.settings.show_policies -%}
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank %}<a href="{{ policy.url }}" style="margin-left:14px;">{{ policy.title }}</a>{% endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "checkbox", "id": "show_policies", "label": "Show store policies", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Made in India" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Crafted in Hazaribagh, Jharkhand. Made for everyday India.</p>" }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Get the good stuff" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Recipes, launches and offers. No spam." }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "menu" },
+      { "type": "menu" },
+      { "type": "newsletter" }
+    ]
+  },
+  "enabled_on": { "groups": ["footer"] }
+}
+{% endschema %}

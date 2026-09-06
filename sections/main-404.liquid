@@ -1,0 +1,15 @@
+<section class="section text-center">
+  <div class="page-width page-width--narrow">
+    <span class="section-head__eyebrow">404</span>
+    <h1 style="font-size:var(--fs-display);">This page went for a shake.</h1>
+    <p class="muted" style="font-size:1.05rem;">We couldn't find what you were looking for — but the cocoa is still where you left it.</p>
+    <div class="hero__actions justify-center" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+      <a href="{{ routes.root_url }}" class="btn btn--primary btn--lg">Back home</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline btn--lg">Shop NutriDates</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

@@ -1,0 +1,36 @@
+{%- comment -%}
+  Renders price with compare-at and % off.
+  Params: product (or variant), size ('sm' | 'lg'), id
+{%- endcomment -%}
+
+{%- liquid
+  if variant
+    assign target = variant
+  else
+    assign target = product
+  endif
+
+  if product and variant == null
+    assign price = product.price
+    assign compare = product.compare_at_price
+    assign available = product.available
+  else
+    assign price = target.price
+    assign compare = target.compare_at_price
+    assign available = target.available
+  endif
+
+  assign price_class = 'price'
+  if size == 'lg'
+    assign price_class = 'price price--large'
+  endif
+-%}
+
+<div class="card__price"{% if id %} id="{{ id }}"{% endif %}>
+  <span class="{{ price_class }}">{{ price | money }}</span>
+  {%- if compare and compare > price -%}
+    <span class="price--compare">{{ compare | money }}</span>
+    {%- assign off = compare | minus: price | times: 100.0 | divided_by: compare | round -%}
+    <span class="price--off">{{ off }}% OFF</span>
+  {%- endif -%}
+</div>

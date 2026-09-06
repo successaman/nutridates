@@ -1,0 +1,309 @@
+{{ 'section-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+-%}
+
+<section class="section section--tight">
+  <div class="page-width">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      {%- if collection %}<a href="{{ collection.url }}">{{ collection.title }}</a><span>/</span>{% endif -%}
+      <span aria-current="page">{{ product.title }}</span>
+    </nav>
+
+    <div class="pdp">
+      {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
+      <nd-gallery class="pdp__gallery">
+        <div class="pdp__main" data-gallery-main>
+          {%- for media in product.media -%}
+            <div class="pdp__slide" id="Slide-{{ media.id }}">
+              <img src="{{ media | image_url: width: 1400 }}"
+                   srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1400 }} 1400w"
+                   sizes="(min-width:990px) 46vw, 92vw"
+                   alt="{{ media.alt | default: product.title | escape }}"
+                   width="{{ media.width }}" height="{{ media.height }}"
+                   {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            </div>
+          {%- else -%}
+            <div class="pdp__slide">{{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {%- endfor -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="pdp__thumbs">
+            {%- for media in product.media -%}
+              <button type="button" class="pdp__thumb" data-gallery-thumb="Slide-{{ media.id }}"
+                      aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                      aria-label="Image {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 200 }}" alt="" width="80" height="80" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </nd-gallery>
+
+      {%- comment -%} ---------- Info ---------- {%- endcomment -%}
+      <div class="pdp__info">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+            {%- when 'title' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- if product.metafields.reviews.rating.value != blank -%}
+                  <span class="rating" style="margin-bottom:10px;">
+                    <span class="rating__stars" aria-hidden="true">★★★★★</span>
+                    <span>{{ product.metafields.reviews.rating.value.rating }} · {{ product.metafields.reviews.rating_count.value }} reviews</span>
+                  </span>
+                {%- endif -%}
+                <h1 class="pdp__title">{{ product.title }}</h1>
+                {%- if block.settings.subtitle != blank -%}
+                  <p class="pdp__subtitle">{{ block.settings.subtitle }}</p>
+                {%- endif -%}
+              </div>
+
+            {%- when 'price' -%}
+              {%- assign price_id = 'Price-' | append: section.id -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'price', variant: current, size: 'lg', id: price_id %}
+                <p class="pdp__tax muted">Inclusive of all taxes. Shipping calculated at checkout.</p>
+              </div>
+
+            {%- when 'chips' -%}
+              <div class="pdp__chips" {{ block.shopify_attributes }}>
+                {%- assign chips = block.settings.chips | split: ',' -%}
+                {%- for chip in chips -%}
+                  <span class="chip chip--gold">{{ chip | strip }}</span>
+                {%- endfor -%}
+              </div>
+
+            {%- when 'variants' -%}
+              {%- unless product.has_only_default_variant -%}
+                <nd-variants class="pdp__variants" data-section="{{ section.id }}" {{ block.shopify_attributes }}>
+                  {%- for option in product.options_with_values -%}
+                    <fieldset class="pdp__option">
+                      <legend class="field__label">{{ option.name }}</legend>
+                      <div class="pdp__swatches">
+                        {%- for value in option.values -%}
+                          <input type="radio"
+                                 id="Opt-{{ section.id }}-{{ forloop.parentloop.index }}-{{ forloop.index }}"
+                                 name="option-{{ forloop.parentloop.index }}"
+                                 value="{{ value | escape }}"
+                                 {% if option.selected_value == value %}checked{% endif %}
+                                 class="visually-hidden">
+                          <label for="Opt-{{ section.id }}-{{ forloop.parentloop.index }}-{{ forloop.index }}" class="pdp__swatch">{{ value }}</label>
+                        {%- endfor -%}
+                      </div>
+                    </fieldset>
+                  {%- endfor -%}
+                  <script type="application/json">
+                    {{ product.variants | json }}
+                  </script>
+                  <input type="hidden" name="id" form="ProductForm-{{ section.id }}" value="{{ current.id }}">
+                </nd-variants>
+              {%- endunless -%}
+
+            {%- when 'buy_buttons' -%}
+              {%- assign form_id = 'ProductForm-' | append: section.id -%}
+              <div class="pdp__buy" {{ block.shopify_attributes }}>
+                {%- form 'product', product, id: form_id, data-cart-form: true, class: 'pdp__form' -%}
+                  {%- if product.has_only_default_variant -%}
+                    <input type="hidden" name="id" value="{{ current.id }}">
+                  {%- endif -%}
+
+                  <div class="pdp__buy-row">
+                    <nd-quantity class="qty">
+                      <button type="button" data-qty-change="minus" aria-label="Decrease quantity">−</button>
+                      <input class="qty__input" type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+                      <button type="button" data-qty-change="plus" aria-label="Increase quantity">+</button>
+                    </nd-quantity>
+
+                    <button type="submit"
+                            id="AddButton-{{ section.id }}"
+                            class="btn btn--primary btn--full"
+                            data-label-add="Add to cart"
+                            data-label-sold-out="Sold out"
+                            data-label-unavailable="Unavailable"
+                            {% unless current.available %}disabled{% endunless %}>
+                      <span>{% if current.available %}Add to cart{% else %}Sold out{% endif %}</span>
+                    </button>
+                  </div>
+
+                  <p data-cart-error hidden style="color:#B3261E;font-size:var(--fs-sm);margin-top:10px;"></p>
+
+                  {%- if block.settings.show_dynamic_checkout -%}
+                    {{ form | payment_button }}
+                  {%- endif -%}
+                {%- endform -%}
+              </div>
+
+            {%- when 'trust' -%}
+              <ul class="pdp__trust" {{ block.shopify_attributes }}>
+                {%- assign rows = block.settings.items | newline_to_br | split: '<br />' -%}
+                {%- for row in rows -%}
+                  {%- if row != blank -%}
+                    <li><span class="pdp__trust-icon">{% render 'icon', name: 'check' %}</span>{{ row | strip }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'description' -%}
+              <div class="pdp__desc rte" {{ block.shopify_attributes }}>
+                {{ product.description }}
+              </div>
+
+            {%- when 'accordion' -%}
+              <details class="accordion__item" {{ block.shopify_attributes }}>
+                <summary class="accordion__summary">
+                  {{ block.settings.heading }}
+                  <span class="accordion__icon">{% render 'icon', name: 'plus' %}</span>
+                </summary>
+                <div class="accordion__content">{{ block.settings.content }}</div>
+              </details>
+
+            {%- when 'nutrition' -%}
+              <details class="accordion__item" {{ block.shopify_attributes }}>
+                <summary class="accordion__summary">
+                  {{ block.settings.heading }}
+                  <span class="accordion__icon">{% render 'icon', name: 'plus' %}</span>
+                </summary>
+                <div class="accordion__content">
+                  <div class="table-wrap">
+                    <table class="nutri-table">
+                      <thead>
+                        <tr><th>Nutrient</th><th>Per 100g</th><th>Per 32g</th></tr>
+                      </thead>
+                      <tbody>
+                        {%- assign rows = block.settings.rows | newline_to_br | split: '<br />' -%}
+                        {%- for row in rows -%}
+                          {%- assign cells = row | strip | split: '|' -%}
+                          {%- if cells.size > 1 -%}
+                            <tr>
+                              <th scope="row" style="font-weight:600;">{{ cells[0] | strip }}</th>
+                              <td>{{ cells[1] | strip }}</td>
+                              <td>{{ cells[2] | strip }}</td>
+                            </tr>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </details>
+
+            {%- when 'share' -%}
+              <div {{ block.shopify_attributes }} style="margin-top:18px;">
+                <span class="muted" style="font-size:var(--fs-xs);">SKU: {{ current.sku | default: '—' }}</span>
+              </div>
+
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}Product structured data{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 400 | json }},
+  {% if product.featured_media %}"image": [{{ product.featured_media | image_url: width: 1200 | prepend: "https:" | json }}],{% endif %}
+  "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+  "offers": {
+    "@type": "Offer",
+    "price": {{ current.price | divided_by: 100.0 }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "availability": "https://schema.org/{% if current.available %}InStock{% else %}OutOfStock{% endif %}",
+    "url": {{ shop.url | append: product.url | json }}
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product information",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "250g pouch · roughly 8 servings" }
+      ]
+    },
+    { "type": "price", "name": "Price", "limit": 1, "settings": [] },
+    {
+      "type": "chips",
+      "name": "Highlight chips",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "chips",
+          "label": "Chips",
+          "default": "17g protein with milk, Dates + cocoa, 30-second prep",
+          "info": "Comma separated."
+        }
+      ]
+    },
+    { "type": "variants", "name": "Variant picker", "limit": 1, "settings": [] },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust list",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Items (one per line)",
+          "default": "Shipped across India from Hazaribagh, Jharkhand\nDispatch within 24-48 hours\nFSSAI compliant labelling"
+        }
+      ]
+    },
+    { "type": "description", "name": "Description", "limit": 1, "settings": [] },
+    {
+      "type": "accordion",
+      "name": "Accordion row",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Ingredients" },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Soya Protein Isolate, Dates Powder, Oats Powder, Skimmed Milk Powder, Cocoa, Dry Fruits Powder, Guar Gum, Soya Lecithin, Salt.</p>"
+        }
+      ]
+    },
+    {
+      "type": "nutrition",
+      "name": "Nutrition accordion",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Nutrition facts" },
+        {
+          "type": "textarea",
+          "id": "rows",
+          "label": "Rows",
+          "info": "One per line: Nutrient | Per 100g | Per 32g",
+          "default": "Energy | 416 kcal | 133 kcal\nProtein | 34 g | 11 g\nCarbohydrate | 45 g | 14.4 g\nNatural sugar | 25 g | 8 g\nDietary fibre | 6 g | 1.9 g\nTotal fat | 7 g | 2.2 g"
+        }
+      ]
+    },
+    { "type": "share", "name": "SKU", "limit": 1, "settings": [] }
+  ],
+  "settings": []
+}
+{% endschema %}

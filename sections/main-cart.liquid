@@ -1,0 +1,98 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-head section-head--left reveal">
+      <h1 class="section-head__title">Your cart</h1>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="text-center" style="padding-block:60px;">
+        <p style="font-size:1.2rem;font-weight:700;">Nothing here yet.</p>
+        <p class="muted">Chocolate that works harder is one click away.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary btn--lg">Shop NutriDates</a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="cart-layout">
+        <div>
+          <ul class="cart-lines">
+            {%- for line in cart.items -%}
+              <li class="cart-line">
+                <a href="{{ line.url }}" class="cart-line__media">
+                  {%- if line.image -%}
+                    <img src="{{ line.image | image_url: width: 300 }}" alt="{{ line.title | escape }}" width="110" height="110" loading="lazy">
+                  {%- endif -%}
+                </a>
+                <div class="cart-line__info">
+                  <a href="{{ line.url }}" class="cart-line__title">{{ line.product.title }}</a>
+                  {%- unless line.variant.title contains 'Default' -%}
+                    <p class="muted" style="font-size:var(--fs-sm);margin:2px 0 0;">{{ line.variant.title }}</p>
+                  {%- endunless -%}
+                  <p class="price" style="margin:8px 0 0;">{{ line.final_line_price | money }}</p>
+                </div>
+                <div class="cart-line__actions">
+                  <nd-quantity class="qty">
+                    <button type="button" data-qty-change="minus" aria-label="Decrease">−</button>
+                    <input class="qty__input" type="number" name="updates[]" value="{{ line.quantity }}" min="0"
+                           aria-label="Quantity for {{ line.title | escape }}" onchange="this.form.submit()">
+                    <button type="button" data-qty-change="plus" aria-label="Increase">+</button>
+                  </nd-quantity>
+                  <button type="button" data-cart-remove="{{ forloop.index }}" class="muted"
+                          style="font-size:var(--fs-xs);text-decoration:underline;">Remove</button>
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          {%- if settings.cart_show_note -%}
+            <div class="field" style="margin-top:24px;">
+              <label class="field__label" for="CartNote">Order note</label>
+              <textarea class="input" id="CartNote" name="note" rows="3" placeholder="Anything we should know?">{{ cart.note }}</textarea>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <aside class="cart-summary">
+          <h2 style="font-size:1.1rem;">Summary</h2>
+          <div class="cart-summary__row">
+            <span>Subtotal</span>
+            <span class="price">{{ cart.total_price | money }}</span>
+          </div>
+          {%- if cart.cart_level_discount_applications.size > 0 -%}
+            {%- for discount in cart.cart_level_discount_applications -%}
+              <div class="cart-summary__row" style="color:var(--success);">
+                <span>{{ discount.title }}</span>
+                <span>-{{ discount.total_allocated_amount | money }}</span>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+          <p class="muted" style="font-size:var(--fs-xs);">Taxes and shipping calculated at checkout.</p>
+          <button type="submit" name="checkout" class="btn btn--primary btn--full btn--lg">Checkout</button>
+          <button type="submit" name="update" class="btn btn--ghost btn--sm" style="margin-top:10px;">Update cart</button>
+        </aside>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .cart-layout{ display:grid; gap:clamp(24px,3vw,48px); grid-template-columns:1.7fr 1fr; align-items:start; }
+  .cart-lines{ border-top:1px solid var(--line); }
+  .cart-line{ display:grid; grid-template-columns:110px 1fr auto; gap:18px; align-items:center; padding:20px 0; border-bottom:1px solid var(--line); }
+  .cart-line__media img{ border-radius:var(--r-md); object-fit:cover; aspect-ratio:1; width:110px; }
+  .cart-line__title{ font-family:var(--font-heading-family,"Poppins",sans-serif); font-weight:700; }
+  .cart-line__actions{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  .cart-summary{ position:sticky; top:calc(var(--header-h) + 24px); background:var(--nd-cream); border-radius:var(--r-lg); padding:26px 24px; }
+  .cart-summary__row{ display:flex; justify-content:space-between; align-items:center; padding-block:8px; }
+  @media (max-width:989px){
+    .cart-layout{ grid-template-columns:1fr; }
+    .cart-summary{ position:static; }
+  }
+  @media (max-width:600px){
+    .cart-line{ grid-template-columns:84px 1fr; }
+    .cart-line__media img{ width:84px; }
+    .cart-line__actions{ grid-column:1/-1; flex-direction:row; align-items:center; justify-content:space-between; }
+  }
+</style>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

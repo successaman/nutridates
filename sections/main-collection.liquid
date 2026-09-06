@@ -1,0 +1,61 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-head reveal">
+      <h1 class="section-head__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="section-head__sub">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_sorting -%}
+      <div class="collection-bar">
+        <span class="muted">{{ collection.products_count }} product{% if collection.products_count != 1 %}s{% endif %}</span>
+        <form method="get" class="collection-bar__sort">
+          <label class="visually-hidden" for="SortBy">Sort by</label>
+          <select class="input" name="sort_by" id="SortBy" onchange="this.form.submit()">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </form>
+      </div>
+    {%- endif -%}
+
+    {%- paginate collection.products by section.settings.per_page -%}
+      <div class="grid" style="grid-template-columns:repeat({{ section.settings.columns }},1fr);">
+        {%- for product in collection.products -%}
+          <div class="reveal">{% render 'product-card', product: product %}</div>
+        {%- else -%}
+          <p class="muted">No products here yet.</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">
+          {%- if paginate.previous %}<a class="btn btn--outline btn--sm" href="{{ paginate.previous.url }}">Previous</a>{% endif -%}
+          <span class="muted">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next %}<a class="btn btn--outline btn--sm" href="{{ paginate.next.url }}">Next</a>{% endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+<style>
+  .collection-bar{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
+  .collection-bar__sort .input{ width:auto; min-width:220px; border-radius:var(--r-pill); }
+  .pagination{ display:flex; align-items:center; justify-content:center; gap:16px; margin-top:40px; }
+  @media (max-width:989px){ .grid{ grid-template-columns:repeat(2,1fr)!important; } }
+  @media (max-width:520px){ .grid{ grid-template-columns:1fr!important; } }
+</style>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "columns", "min": 2, "max": 5, "step": 1, "label": "Desktop columns", "default": 4 },
+    { "type": "range", "id": "per_page", "min": 8, "max": 48, "step": 4, "label": "Products per page", "default": 24 },
+    { "type": "checkbox", "id": "show_sorting", "label": "Show sorting", "default": true }
+  ]
+}
+{% endschema %}

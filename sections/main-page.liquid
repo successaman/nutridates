@@ -1,0 +1,30 @@
+<section class="section">
+  <div class="page-width page-width--narrow">
+    <div class="section-head reveal">
+      <h1 class="section-head__title">{{ page.title }}</h1>
+    </div>
+    <div class="rte reveal">{{ page.content }}</div>
+  </div>
+</section>
+
+<style>
+  .rte{ font-size:1.02rem; color:var(--text); }
+  .rte h2{ font-size:var(--fs-h3); margin-top:1.8em; }
+  .rte h3{ font-size:var(--fs-h4); margin-top:1.6em; }
+  .rte ul{ list-style:disc; padding-left:1.3em; margin-bottom:1.2em; }
+  .rte ol{ list-style:decimal; padding-left:1.3em; margin-bottom:1.2em; }
+  .rte li{ margin-bottom:.5em; }
+  .rte a{ color:var(--nd-date); text-decoration:underline; text-underline-offset:3px; }
+  .rte img{ border-radius:var(--r-lg); margin-block:1.5em; }
+  .rte blockquote{
+    margin:1.6em 0; padding:18px 24px; border-left:4px solid var(--nd-gold);
+    background:var(--nd-cream); border-radius:0 var(--r-md) var(--r-md) 0;
+    font-family:var(--font-heading-family,"Poppins",sans-serif); font-weight:500;
+  }
+  .rte table{ width:100%; border-collapse:collapse; margin-block:1.5em; }
+  .rte th,.rte td{ padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; }
+</style>
+
+{% schema %}
+{ "name": "Page", "settings": [] }
+{% endschema %}

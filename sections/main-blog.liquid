@@ -1,0 +1,44 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-head reveal">
+      <span class="section-head__eyebrow">The NutriDates Journal</span>
+      <h1 class="section-head__title">{{ blog.title }}</h1>
+    </div>
+
+    {%- paginate blog.articles by 12 -%}
+      <div class="grid grid--3">
+        {%- for article in blog.articles -%}
+          <a href="{{ article.url }}" class="cc__card cc__card--boxed reveal" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;">
+            <div class="cc__media" style="aspect-ratio:4/3;background:var(--nd-beige);">
+              {%- if article.image -%}
+                <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.image.alt | escape }}" loading="lazy"
+                     style="width:100%;height:100%;object-fit:cover;">
+              {%- endif -%}
+            </div>
+            <div style="padding:20px 20px 24px;">
+              <span class="muted" style="font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.1em;font-weight:700;">
+                {{ article.published_at | date: '%b %d, %Y' }}
+              </span>
+              <h2 style="font-size:1.1rem;margin:8px 0 .4em;">{{ article.title }}</h2>
+              <p class="muted" style="font-size:.92rem;margin:0;">{{ article.excerpt_or_content | strip_html | truncate: 110 }}</p>
+            </div>
+          </a>
+        {%- else -%}
+          <p class="muted">No articles yet.</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" style="display:flex;justify-content:center;gap:16px;align-items:center;margin-top:40px;">
+          {%- if paginate.previous %}<a class="btn btn--outline btn--sm" href="{{ paginate.previous.url }}">Previous</a>{% endif -%}
+          <span class="muted">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next %}<a class="btn btn--outline btn--sm" href="{{ paginate.next.url }}">Next</a>{% endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Blog", "settings": [] }
+{% endschema %}

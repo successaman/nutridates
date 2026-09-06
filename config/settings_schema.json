@@ -1,0 +1,124 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "NutriDates",
+    "theme_version": "1.0.0",
+    "theme_author": "NutriDates",
+    "theme_documentation_url": "https://nutridates.in",
+    "theme_support_url": "https://nutridates.in/pages/contact"
+  },
+  {
+    "name": "Brand colours",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "The NutriDates palette. Aim for roughly 60% cream/white, 20% cocoa, 10% beige, 5% deep brown, 5% gold."
+      },
+      { "type": "color", "id": "color_cocoa", "label": "Primary cocoa", "default": "#3A2017" },
+      { "type": "color", "id": "color_cocoa_deep", "label": "Deep cocoa", "default": "#21110C" },
+      { "type": "color", "id": "color_gold", "label": "Nutri gold", "default": "#F5A623" },
+      { "type": "color", "id": "color_cream", "label": "Warm cream", "default": "#FFF6E9" },
+      { "type": "color", "id": "color_white", "label": "Warm white", "default": "#FFFCF7" },
+      { "type": "color", "id": "color_date", "label": "Date brown", "default": "#75442D" },
+      { "type": "color", "id": "color_beige", "label": "Soft beige", "default": "#EEDCC7" },
+      { "type": "color", "id": "color_ink", "label": "Text black", "default": "#171411" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Heading font",
+        "default": "poppins_n7",
+        "info": "Bold, rounded and confident. Poppins or Nunito Sans suit the brand."
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "dm_sans_n4"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "Page width",
+        "default": 1320
+      }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "range", "id": "logo_width", "min": 60, "max": 260, "step": 5, "unit": "px", "label": "Logo width", "default": 140 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Sip The Strength" },
+      {
+        "type": "textarea",
+        "id": "brand_blurb",
+        "label": "Short brand description",
+        "default": "A modern Indian nutrition brand powered by dates, cocoa and functional ingredients. Made in Hazaribagh, Jharkhand."
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      { "type": "checkbox", "id": "card_show_vendor", "label": "Show vendor", "default": false },
+      { "type": "checkbox", "id": "card_show_rating", "label": "Show product rating", "default": true },
+      { "type": "checkbox", "id": "card_show_second_image", "label": "Swap to second image on hover", "default": true },
+      { "type": "checkbox", "id": "card_show_quick_add", "label": "Show Add to cart button", "default": true },
+      {
+        "type": "text",
+        "id": "card_badge_1",
+        "label": "Card badge 1",
+        "default": "17g protein with milk",
+        "info": "Falls back to this when a product has no 'badge_1' metafield."
+      },
+      {
+        "type": "text",
+        "id": "card_badge_2",
+        "label": "Card badge 2",
+        "info": "Leave empty unless the claim is supported by your lab report and pack."
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      },
+      { "type": "checkbox", "id": "cart_show_note", "label": "Enable order notes", "default": true },
+      { "type": "text", "id": "free_shipping_threshold", "label": "Free shipping threshold (in rupees)", "default": "699" }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram", "default": "https://instagram.com/nutridatesofficial" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube" },
+      { "type": "text", "id": "social_whatsapp", "label": "WhatsApp" },
+      { "type": "image_picker", "id": "share_image", "label": "Social sharing image" }
+    ]
+  }
+]

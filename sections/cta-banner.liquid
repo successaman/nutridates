@@ -1,0 +1,54 @@
+<section class="cta-banner{% if section.settings.image != blank %} cta-banner--image{% endif %}">
+  {%- if section.settings.image != blank -%}
+    <img class="cta-banner__bg" src="{{ section.settings.image | image_url: width: 2000 }}"
+         alt="{{ section.settings.image.alt | escape }}" loading="lazy">
+  {%- endif -%}
+  <div class="page-width cta-banner__inner reveal">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="section-head__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <h2 class="cta-banner__title">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}
+      <p class="cta-banner__text">{{ section.settings.text }}</p>
+    {%- endif -%}
+    <div class="hero__actions justify-center">
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="btn btn--gold btn--lg">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_text != blank -%}
+        <a href="{{ section.settings.cta2_url }}" class="btn btn--light btn--lg">{{ section.settings.cta2_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-banner{
+    position:relative; overflow:hidden; text-align:center;
+    background:var(--nd-cocoa); color:var(--nd-cream);
+    padding-block:clamp(56px,7vw,110px);
+  }
+  .cta-banner__bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.4; }
+  .cta-banner--image::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(33,17,12,.5),rgba(33,17,12,.75)); }
+  .cta-banner__inner{ position:relative; z-index:1; }
+  .cta-banner__title{ color:var(--nd-white); font-size:var(--fs-h1); max-width:16ch; margin-inline:auto; text-wrap:balance; }
+  .cta-banner__text{ color:rgba(255,246,233,.8); max-width:52ch; margin:0 auto 28px; font-size:1.05rem; }
+</style>
+
+{% schema %}
+{
+  "name": "CTA banner",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Sip The Strength" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Make it your morning habit." },
+    { "type": "text", "id": "text", "label": "Text", "default": "250g pouch. Roughly 8 servings. Cocoa, dates and protein in every scoop." },
+    { "type": "text", "id": "cta_text", "label": "Primary button", "default": "Order now — ₹399" },
+    { "type": "url", "id": "cta_url", "label": "Primary button link" },
+    { "type": "text", "id": "cta2_text", "label": "Secondary button" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary button link" }
+  ],
+  "presets": [{ "name": "CTA banner" }]
+}
+{% endschema %}

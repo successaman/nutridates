@@ -1,0 +1,45 @@
+{
+  "current": {
+    "color_cocoa": "#3A2017",
+    "color_cocoa_deep": "#21110C",
+    "color_gold": "#F5A623",
+    "color_cream": "#FFF6E9",
+    "color_white": "#FFFCF7",
+    "color_date": "#75442D",
+    "color_beige": "#EEDCC7",
+    "color_ink": "#171411",
+
+    "type_heading_font": "poppins_n7",
+    "type_body_font": "dm_sans_n4",
+
+    "page_width": 1320,
+
+    "logo_width": 140,
+    "brand_tagline": "Sip The Strength",
+    "brand_blurb": "A modern Indian nutrition brand powered by dates, cocoa and functional ingredients. Crafted in Hazaribagh, Jharkhand.",
+
+    "card_show_vendor": false,
+    "card_show_rating": true,
+    "card_show_second_image": true,
+    "card_show_quick_add": true,
+    "card_badge_1": "17g protein with milk",
+    "card_badge_2": "",
+
+    "cart_type": "drawer",
+    "cart_show_note": true,
+    "free_shipping_threshold": "699",
+
+    "social_instagram": "https://instagram.com/nutridatesofficial",
+    "social_facebook": "",
+    "social_youtube": "",
+    "social_whatsapp": ""
+  },
+  "presets": {
+    "NutriDates": {
+      "color_cocoa": "#3A2017",
+      "color_gold": "#F5A623",
+      "type_heading_font": "poppins_n7",
+      "type_body_font": "dm_sans_n4"
+    }
+  }
+}
